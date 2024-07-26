@@ -1,0 +1,91 @@
+using System.Diagnostics.Tracing;
+
+namespace Hangman
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Console.WriteLine("Wanna Play a Game?");
+
+            string[] hangman = { "power", "drive", "crime", "riden", "human" };
+
+
+            Random random = new Random();
+            string selectWord = hangman[random.Next(hangman.Length)];
+            char[] wordToGuess = selectWord.ToCharArray();
+            char[] word = wordToGuess;
+            char[] guessedLetters = new char[wordToGuess.Length];
+
+
+            for (int i = 0; i < guessedLetters.Length; i++)
+            {
+                guessedLetters[i] = '_';
+            }
+
+            int attemptsLeft = 10;
+
+            while (attemptsLeft > 0)
+            {
+                Console.WriteLine("Current word: " + new string(guessedLetters));
+                Console.WriteLine("Guess a Letter: ");
+                char guess = char.ToLower(Console.ReadKey().KeyChar);
+                Console.WriteLine();
+
+                bool correctGuess = false;
+
+                for (int i = 0; i < wordToGuess.Length; i++)
+                {
+                    if (wordToGuess[i] == guess)
+                    {
+                        guessedLetters[i] = guess;
+                        correctGuess = true;
+                    }
+                }
+
+                if (!correctGuess)
+                {
+                    attemptsLeft--;
+                    Console.WriteLine("Incorrect!  Attempts left: " + attemptsLeft);
+
+                    if (attemptsLeft == 9)
+                        Console.WriteLine("\n     Y\n");
+                    if (attemptsLeft == 8)
+                        Console.WriteLine("\n     YO\n");
+                    if (attemptsLeft == 7)
+                        Console.WriteLine("\n     YOU\n");
+                    if (attemptsLeft == 6)
+                        Console.WriteLine("\n     YOU A\n");
+                    if (attemptsLeft == 5)
+                        Console.WriteLine("\n     YOU AR\n");
+                    if (attemptsLeft == 4)
+                        Console.WriteLine("\n     YOU ARE\n");
+                    if (attemptsLeft == 3)
+                        Console.WriteLine("\n     YOU ARE H\n");
+                    if (attemptsLeft == 2)
+                        Console.WriteLine("\n     YOU ARE HU\n");
+                    if (attemptsLeft == 1)
+                        Console.WriteLine("\n     YOU ARE HUN\n");
+
+
+                }
+
+                if (new string(guessedLetters) == selectWord)
+                {
+                    Console.WriteLine("Congratulations! You guessed the word: " + selectWord);
+                    Console.ReadLine();
+                    break;
+                }
+
+
+                if (attemptsLeft == 0)
+                {
+                    Console.WriteLine("Sorry, you have run out of attempts");
+                    Console.WriteLine("\n     YOU ARE HUNG\n");
+
+                }
+            }
+        }
+    }
+}
